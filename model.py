@@ -7,11 +7,21 @@ import os
 class Linear_QNet(nn.Module):
     def __init__(self, input_size, hidden_size,output_size):
         super().__init__()
-        self.linear1 = nn.Linear(input_size,hidden_size)
-        self.linear2 = nn.Linear(hidden_size,output_size)
-    
+
+        self.block_1 = nn.Sequential(
+                nn.Linear(input_size,hidden_size),
+                nn.ReLU(),
+                nn.Linear(hidden_size,hidden_size),
+                nn.ReLU(),
+                nn.Linear(hidden_size,hidden_size),
+                nn.ReLU(),
+                nn.Linear(hidden_size,hidden_size),
+                nn.ReLU(),
+                nn.Linear(hidden_size,output_size)
+            )
+
     def forward(self,x):
-        return self.linear2(F.relu(self.linear1(x)))
+        return self.block_1(x)
     
     def save(self,file_name = 'model.pth'):
         model_folder_path = './model'

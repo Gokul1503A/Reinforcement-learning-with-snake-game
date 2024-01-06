@@ -20,6 +20,23 @@ class Agent:
         #model,train
         self.model = Linear_QNet(11,256,3)
         self.trainer = QTrainer(self.model,LR,self.gamma)
+        # uncomment if model path exists
+        
+        # Load the checkpoint
+        self.checkpoint_path = 'model/model.pth'
+        self.checkpoint = torch.load(self.checkpoint_path)
+
+        # # Assuming self.model has linear1 and linear2 layers
+        self.model.block_1[0].weight.data = self.checkpoint['block_1.0.weight']
+        self.model.block_1[0].bias.data = self.checkpoint['block_1.0.bias']
+        self.model.block_1[2].weight.data = self.checkpoint['block_1.2.weight']
+        self.model.block_1[2].bias.data = self.checkpoint['block_1.2.bias']
+        self.model.block_1[4].weight.data = self.checkpoint['block_1.4.weight']
+        self.model.block_1[4].bias.data = self.checkpoint['block_1.6.bias']
+        self.model.block_1[6].weight.data = self.checkpoint['block_1.6.weight']
+        self.model.block_1[6].bias.data = self.checkpoint['block_1.6.bias']
+        
+
 
     def get_state(self,game):
 
@@ -135,7 +152,7 @@ def train():
 
             if score > record:
                 record = score
-                # agnent.model.save
+                agent.model.save()
             
             print(f"game{agent.n_games}, score {score}, record {record}")
             plot_scores.append(score)
