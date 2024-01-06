@@ -22,6 +22,7 @@ class Agent:
         self.trainer = QTrainer(self.model,LR,self.gamma)
 
     def get_state(self,game):
+
         head = game.snake.body[0]
         point_l = Vector2(head.x - 40, head.y)
         point_r = Vector2(head.x + 40, head.y)
@@ -59,10 +60,10 @@ class Agent:
             dir_d,
             
             # Food location 
-            game.fruit.pos.x < game.fruit.pos.x,  # food left
-            game.fruit.pos.x > game.fruit.pos.x,  # food right
-            game.fruit.pos.y < game.fruit.pos.y,  # food up
-            game.fruit.pos.y > game.fruit.pos.y  # food down
+            game.fruit.pos.x < head.x,  # food left
+            game.fruit.pos.x > head.x,  # food right
+            game.fruit.pos.y < head.y,  # food up
+            game.fruit.pos.y > head.y  # food down
             ]
         
         return np.array(state, dtype=int)

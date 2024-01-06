@@ -10,7 +10,7 @@ pygame.init()
 
 #set no of blocks should be there in screen to form grid
 cell_size = 40
-cell_number = 10
+cell_number = 20
 
 screen_size = cell_number * cell_size
 
@@ -164,6 +164,7 @@ class MAIN:
         self.score = 0
         self.snake.reset()
         self.iteration = 0
+        self.fruit.randomize()
 
     
 
