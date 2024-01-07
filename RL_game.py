@@ -20,7 +20,7 @@ screen.fill((175,215,70)) # screen background color
 
 #create timer to trigger change in display
 screen_update = pygame.USEREVENT
-pygame.time.set_timer(screen_update,10)
+pygame.time.set_timer(screen_update,150)
 
 clock = pygame.time.Clock()
 
@@ -130,14 +130,17 @@ class MAIN:
 
         if not (0 <= pt.x <= cell_number -1) or not (0 <= pt.y <= cell_number -1):
             boolvalue  = True
+            return True
             
         for block in self.snake.body[1:]:
             if block == pt:
                 boolvalue  = True
+                return True
         return boolvalue
     
     def play(self,action):
         self.iteration += 1
+        self.reward = 1
         screen.fill((175,215,70))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -166,9 +169,57 @@ class MAIN:
         self.iteration = 0
         self.fruit.randomize()
 
-    
 
+# game = MAIN()
+
+# def get_state(game):
+
+#         head = game.snake.body[0]
+#         point_l = Vector2(head.x - 1, head.y)
+#         point_r = Vector2(head.x + 1, head.y)
+#         point_u = Vector2(head.x, head.y - 1)
+#         point_d = Vector2(head.x, head.y + 1)
+        
+#         dir_l = game.snake.direction == Vector2(-1,0)
+#         dir_r = game.snake.direction == Vector2(1,0)
+#         dir_u = game.snake.direction == Vector2(0,-1)
+#         dir_d = game.snake.direction == Vector2(0,1)
+
+#         state = [
+#             # Danger straight
+#             (dir_r and game.check_fail(point_r)) or 
+#             (dir_l and game.check_fail(point_l)) or 
+#             (dir_u and game.check_fail(point_u)) or 
+#             (dir_d and game.check_fail(point_d)),
+
+#             # Danger right
+#             (dir_u and game.check_fail(point_r)) or 
+#             (dir_d and game.check_fail(point_l)) or 
+#             (dir_l and game.check_fail(point_u)) or 
+#             (dir_r and game.check_fail(point_d)),
+
+#             # Danger left
+#             (dir_d and game.check_fail(point_r)) or 
+#             (dir_u and game.check_fail(point_l)) or 
+#             (dir_r and game.check_fail(point_u)) or 
+#             (dir_l and game.check_fail(point_d)),
+            
+#             # Move direction
+#             dir_l,
+#             dir_r,
+#             dir_u,
+#             dir_d,
+            
+#             # Food location 
+#             game.fruit.pos.x < head.x,  # food left
+#             game.fruit.pos.x > head.x,  # food right
+#             game.fruit.pos.y < head.y,  # food up
+#             game.fruit.pos.y > head.y  # food down
+#             ]
+        
+#         return np.array(state, dtype=int)
     
-    
-    
-   
+# while True:
+#     action = [1,0,0]
+#     game.play(action)
+#     print(get_state(game))

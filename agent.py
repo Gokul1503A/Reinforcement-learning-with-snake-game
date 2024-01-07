@@ -41,10 +41,10 @@ class Agent:
     def get_state(self,game):
 
         head = game.snake.body[0]
-        point_l = Vector2(head.x - 40, head.y)
-        point_r = Vector2(head.x + 40, head.y)
-        point_u = Vector2(head.x, head.y - 40)
-        point_d = Vector2(head.x, head.y + 40)
+        point_l = Vector2(head.x - 1, head.y)
+        point_r = Vector2(head.x + 1, head.y)
+        point_u = Vector2(head.x, head.y - 1)
+        point_d = Vector2(head.x, head.y + 1)
         
         dir_l = game.snake.direction == Vector2(-1,0)
         dir_r = game.snake.direction == Vector2(1,0)
